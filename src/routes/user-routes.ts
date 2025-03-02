@@ -14,7 +14,7 @@ userRouter.post(
             required: true,
             schema: { $ref: "#/definitions/UserPost" }
             } */
-  /* #swagger.responses[200]= {
+  /* #swagger.responses[201]= {
   description: 'Usuário criado com sucesso.',
   schema: {message: "Usuário criado com sucesso."}}
    #swagger.responses[400]= {

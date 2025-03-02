@@ -29,7 +29,7 @@
           }
         ],
         "responses": {
-          "200": {
+          "201": {
             "description": "Usuário criado com sucesso.",
             "schema": {
               "type": "object",
@@ -244,10 +244,66 @@
     },
     "/v1/video": {
       "post": {
-        "description": "",
+        "tags": [
+          "Videos"
+        ],
+        "description": "Posta um novo video.",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Título do vídeo",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "Descrição do vídeo",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "video",
+            "in": "formData",
+            "description": "Arquivo de vídeo",
+            "required": true,
+            "type": "file"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "201": {
+            "description": "Video postado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Video postado com sucesso."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Preencha todos os campos.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Preencha os dados corretamente."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -262,7 +318,10 @@
     },
     "/v1/video/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Videos"
+        ],
+        "description": "Retorna um video pelo id.",
         "parameters": [
           {
             "name": "id",
@@ -272,8 +331,23 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Video retornado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Video encontrado."
+                },
+                "video": {
+                  "$ref": "#/definitions/VideoGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       },
@@ -306,6 +380,101 @@
         "responses": {
           "default": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "description": "Retorna um token.",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "description": "Email e senha do usuário.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token gerado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Login gerado com sucesso."
+                },
+                "token": {
+                  "type": "string",
+                  "example": "string"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Username e senha são obrigatórios.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Username e senha são obrigatórios."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Senha invalida.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Email inválido, usuário não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Email inválido, usuário não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Email inválido, usuário não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -422,6 +591,27 @@
           "example": "string"
         },
         "updatedAt": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    "VideoGet": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "string"
+        },
+        "title": {
+          "type": "string",
+          "example": "string"
+        },
+        "description": {
+          "type": "string",
+          "example": "string"
+        },
+        "url": {
           "type": "string",
           "example": "string"
         }

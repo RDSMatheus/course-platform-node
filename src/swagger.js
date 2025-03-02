@@ -38,11 +38,21 @@ const doc = {
       createdAt: 'string',
       updatedAt: 'string',
     },
+    VideoGet: {
+      _id: 'string',
+      title: 'string',
+      description: 'string',
+      url: 'string',
+    },
   },
 };
 
 const outputFile = './swagger-output.json';
-const routes = ['./lib/routes/user-routes.js', './lib/routes/video-routes.js'];
+const routes = [
+  './lib/routes/user-routes.js',
+  './lib/routes/video-routes.js',
+  './lib/routes/auth-routes.js',
+];
 
 /* NOTE: If you are using the express Router, you must pass in the 'routes' only the 
 root file where the route starts, such as index.js, app.js, routes.js, etc ... */

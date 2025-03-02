@@ -8,7 +8,6 @@ export class VideoController {
       res.status(201).json({ message: 'Video postado com sucesso.' });
     } catch (error: any) {
       res.status(500).json({ message: error.message });
-      console.log(error);
     }
   }
 
