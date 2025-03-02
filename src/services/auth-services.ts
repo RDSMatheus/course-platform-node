@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { User } from '../models/user-model';
 
 export class AuthServices {
@@ -20,7 +20,7 @@ export class AuthServices {
           .json({ message: 'Email inválido, usuário não encontrado.' });
         return;
       }
-      const isPasswordValid = bcrypt.compare(password, user?.password);
+      const isPasswordValid = await bcrypt.compare(password, user?.password);
 
       if (!isPasswordValid) {
         res.status(401).json({ message: 'Senha invalida.' });
