@@ -1,0 +1,431 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "CoursePlatformApi",
+    "description": "Documentação da api de uma plataforma de cursos.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/v1/user": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Posta um novo usuário.",
+        "parameters": [
+          {
+            "name": "UserData",
+            "in": "body",
+            "description": "Dados do usuário.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserPost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário criado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Usuário criado com sucesso."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário criado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "As senhas não coincidem."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Dados invalidados."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Obtém usuários paginados. Requer token de autorização",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página.",
+            "type": "integer",
+            "required": true
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de usuários.",
+            "type": "integer",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuários retornados com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Usuário retornados."
+                },
+                "users": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "$ref": "#/definitions/UserGet"
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Dados invalidados."
+          }
+        }
+      }
+    },
+    "/v1/user/{email}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Obtém usuário através do email. Requer token de autorização",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Email do usuário."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário retornado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Usuário retornado com sucesso"
+                },
+                "user": {
+                  "$ref": "#/definitions/UserGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Dados invalidados."
+          }
+        }
+      }
+    },
+    "/v1/user/{id}": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Deleta usuário através do id. Requer token de autorização",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id do usuário."
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário deletado com sucesso."
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Dados invalidados."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Atualiza o usuário através do id. Requer token de autorização",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Id do usuário."
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Enviar somente campos que serão alterados.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserUpdate"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário retornado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Usuário atualizado com sucesso"
+                },
+                "updatedUser": {
+                  "$ref": "#/definitions/UserGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Dados invalidados."
+          }
+        }
+      }
+    },
+    "/v1/video": {
+      "post": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/v1/video/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "patch": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "UserPost": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "email": {
+          "type": "string",
+          "example": "email@email.com"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "000.000.000-00"
+        },
+        "password": {
+          "type": "string",
+          "example": "string"
+        },
+        "passwordCheck": {
+          "type": "string",
+          "example": "string"
+        },
+        "premiumAccess": {
+          "type": "string",
+          "example": "boolean"
+        },
+        "paidAccess": {
+          "type": "string",
+          "example": "boolean"
+        }
+      }
+    },
+    "UserUpdate": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "email": {
+          "type": "string",
+          "example": "email@email.com"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "000.000.000-00"
+        },
+        "password": {
+          "type": "string",
+          "example": "string"
+        },
+        "passwordCheck": {
+          "type": "string",
+          "example": "string"
+        },
+        "signUpDate": {
+          "type": "string",
+          "example": "date"
+        },
+        "premiumAccess": {
+          "type": "string",
+          "example": "boolean"
+        },
+        "paidAccess": {
+          "type": "string",
+          "example": "boolean"
+        }
+      }
+    },
+    "UserGet": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "string"
+        },
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "email": {
+          "type": "string",
+          "example": "email@email.com"
+        },
+        "cpf": {
+          "type": "string",
+          "example": "000.000.000-00"
+        },
+        "password": {
+          "type": "string",
+          "example": "string"
+        },
+        "signUpDate": {
+          "type": "string",
+          "example": "date"
+        },
+        "premiumAccess": {
+          "type": "string",
+          "example": "boolean"
+        },
+        "paidAccess": {
+          "type": "string",
+          "example": "boolean"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    }
+  }
+}
