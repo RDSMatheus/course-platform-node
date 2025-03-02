@@ -3,12 +3,14 @@ import { main } from './connection/connection';
 import { routes } from './routes';
 import swaggerUi from 'swagger-ui-express';
 import swaggerFile from './swagger-output.json';
+import cors from 'cors';
 
 const app = express();
 
 const port = process.env.PORT;
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
+app.use(cors());
 
 main();
 routes(app);
