@@ -1,6 +1,6 @@
 import { User } from '../models/user-model';
 import { UserRepository } from '../repository/user-repository';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 export class UserServices {
   private userRepository: UserRepository;
@@ -29,9 +29,18 @@ export class UserServices {
       throw new Error('Usuário com este email já cadastrado.');
     }
 
-    bcrypt.hash(password, saltRounds, async (err, hash) => {
-      await this.userRepository.post({ ...body, password: hash });
+    const hash = await new Promise<string>((resolve, reject) => {
+      bcrypt.hash(password, saltRounds, (err, hash) => {
+        if (err) return reject(err);
+        if (hash) {
+          resolve(hash);
+        } else {
+          reject(new Error('Hashing failed'));
+        }
+      });
     });
+
+    await this.userRepository.post({ ...body, password: hash });
   }
 
   async getByEmail(email: string): Promise<User> {
