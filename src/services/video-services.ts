@@ -34,12 +34,14 @@ export class VideoServices {
   }
 
   async delete(id: string): Promise<void> {
+    const video = await this.videoRepository.getById(id);
     if (!id) throw new Error('Insira o id do video.');
+    if (!video) throw new Error('Video não existe.');
     await this.videoRepository.delete(id);
   }
 
-  async update(id: string, body: Video): Promise<Video> {
+  async update(id: string, req: Request): Promise<Video> {
     if (!id) throw new Error('Insira o id do video.');
-    return await this.videoRepository.update(id, body);
+    return await this.videoRepository.update(id, req);
   }
 }

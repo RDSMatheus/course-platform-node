@@ -13,8 +13,8 @@ const doc = {
       cpf: '000.000.000-00',
       password: 'string',
       passwordCheck: 'string',
-      premiumAccess: 'boolean',
-      paidAccess: 'boolean',
+      premiumAccess: false,
+      paidAccess: false,
     },
     UserUpdate: {
       name: 'string',
@@ -44,6 +44,38 @@ const doc = {
       description: 'string',
       url: 'string',
     },
+    ModulePost: {
+      title: 'string',
+      description: 'string',
+      videos: ['video_id'],
+      introVideo: 'video_id',
+    },
+    ModuleGet: {
+      _id: 'string',
+      title: 'string',
+      description: 'string',
+      videos: ['video_id'],
+      introVideo: 'video_id',
+    },
+    CourseGet: {
+      _id: 'string',
+      title: 'string',
+      description: 'string',
+      price: 'string',
+      modules: ['module_id'],
+      lifetime: false,
+      premium: false,
+      createdAt: 'string',
+      updatedAt: 'string',
+    },
+    CoursePost: {
+      title: 'string',
+      description: 'string',
+      price: 'string',
+      modules: ['module_id'],
+      lifetime: false,
+      premium: false,
+    },
   },
 };
 
@@ -52,9 +84,8 @@ const routes = [
   './lib/routes/user-routes.js',
   './lib/routes/video-routes.js',
   './lib/routes/auth-routes.js',
+  './lib/routes/module-routes.js',
+  './lib/routes/course-routes.js',
 ];
-
-/* NOTE: If you are using the express Router, you must pass in the 'routes' only the 
-root file where the route starts, such as index.js, app.js, routes.js, etc ... */
 
 swaggerAutogen(outputFile, routes, doc);

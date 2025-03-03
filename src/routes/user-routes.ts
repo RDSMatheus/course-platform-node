@@ -49,20 +49,21 @@ userRouter.get(
     #swagger.tags = ["Users"]
       #swagger.description = "Obtém usuários paginados. Requer token de autorização" */ /* #swagger.parameters['page'] = {
             in: 'query',
-            description: 'Número da página.',
+            description: 'Número da página. Default = 1',
             type: "integer",
-            required: true,
+          
             
             },
       #swagger.parameters["limit"] = {
             in: 'query',
-            description: 'Número de usuários.',
+            description: 'Número de usuários. Default = 10',
             type: "integer",
-            required: true,
+          
             
             } */
   /* #swagger.responses[200]= {
-  description: 'Usuários retornados com sucesso.', schema: { message: "Usuário retornados.", users: { type: "array", items: {$ref: "#/definitions/UserGet"}}
+  description: 'Usuários retornados com sucesso.', schema: { message: "Usuário retornados.", users: [ {$ref: "#/definitions/UserGet"}
+  ]
    
 }}
   /* #swagger.responses[500]= {

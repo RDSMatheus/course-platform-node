@@ -46,8 +46,7 @@ export class VideoController {
   static async update(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { body } = req;
-      const video = await new VideoServices().update(id, body);
+      const video = await new VideoServices().update(id, req);
       res.status(200).json({ message: 'Video atualizado com sucesso', video });
     } catch (error: any) {
       console.log(error);

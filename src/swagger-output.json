@@ -73,16 +73,14 @@
           {
             "name": "page",
             "in": "query",
-            "description": "Número da página.",
-            "type": "integer",
-            "required": true
+            "description": "Número da página. Default = 1",
+            "type": "integer"
           },
           {
             "name": "limit",
             "in": "query",
-            "description": "Número de usuários.",
-            "type": "integer",
-            "required": true
+            "description": "Número de usuários. Default = 10",
+            "type": "integer"
           }
         ],
         "responses": {
@@ -96,15 +94,9 @@
                   "example": "Usuário retornados."
                 },
                 "users": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "array"
-                    },
-                    "items": {
-                      "$ref": "#/definitions/UserGet"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/UserGet"
                   }
                 }
               },
@@ -308,10 +300,45 @@
         }
       },
       "get": {
-        "description": "",
+        "tags": [
+          "Videos"
+        ],
+        "description": "Retorna todos os videos paginados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página. Default = 1",
+            "type": "integer"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de videos. Default = 10",
+            "type": "integer"
+          }
+        ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Videos retornados com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Videos encontrados com sucesso."
+                },
+                "video": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/VideoGet"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           }
         }
       }
@@ -352,34 +379,62 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Videos"
+        ],
+        "description": "Deleta um video pelo id.",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "params",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "Id no video."
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "204": {
+            "description": "Video deletado com sucesso."
+          },
+          "400": {
+            "description": "Video não existe."
           }
         }
       },
-      "patch": {
-        "description": "",
+      "put": {
+        "tags": [
+          "Videos"
+        ],
+        "description": "Atualiza o video através do id.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Título do vídeo",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "Descrição do vídeo",
+            "type": "string"
+          },
+          {
+            "name": "video",
+            "in": "formData",
+            "description": "Arquivo de vídeo",
+            "type": "file"
           }
         ],
         "responses": {
-          "default": {
-            "description": ""
+          "200": {
+            "description": "Video atualizado com sucesso."
           }
         }
       }
@@ -478,6 +533,683 @@
           }
         }
       }
+    },
+    "/v1/modules": {
+      "post": {
+        "tags": [
+          "Modules"
+        ],
+        "description": "Cria um novo módulo.",
+        "parameters": [
+          {
+            "name": "ModuleData",
+            "in": "body",
+            "description": "Dados do módulo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ModulePost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Módulo criado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Módulo criado com sucesso."
+                },
+                "module": {
+                  "$ref": "#/definitions/ModuleGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação dos dados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Preencha os dados corretamente."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Modules"
+        ],
+        "description": "Obtém todos os módulos com paginação.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página.",
+            "required": false,
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de módulos por página.",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Módulos retornados com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Modulos retornados com sucesso."
+                },
+                "modules": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/ModuleGet"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/modules/{id}": {
+      "get": {
+        "tags": [
+          "Modules"
+        ],
+        "description": "Obtém um módulo pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do módulo."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Módulo retornado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Módulo encontrado com sucesso."
+                },
+                "module": {
+                  "$ref": "#/definitions/ModuleGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Módulo não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Módulo não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Modules"
+        ],
+        "description": "Deleta um módulo pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do módulo."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Módulo deletado com sucesso."
+          },
+          "404": {
+            "description": "Módulo não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Módulo não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Modules"
+        ],
+        "description": "Atualiza um módulo pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do módulo."
+          },
+          {
+            "name": "ModuleData",
+            "in": "body",
+            "description": "Dados do módulo.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ModulePost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Módulo atualizado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Módulo atualizado com sucesso."
+                },
+                "module": {
+                  "$ref": "#/definitions/ModuleGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação dos dados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Preencha os dados corretamente."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Módulo não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Módulo não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/course": {
+      "post": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "Cria um novo curso.",
+        "parameters": [
+          {
+            "name": "CourseData",
+            "in": "body",
+            "description": "Dados do curso.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CoursePost"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Curso criado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Curso criado com sucesso."
+                },
+                "course": {
+                  "$ref": "#/definitions/CourseGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação dos dados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Preencha os dados corretamente."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "Obtém todos os cursos com paginação.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página.",
+            "required": false,
+            "type": "integer",
+            "default": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número de cursos por página.",
+            "required": false,
+            "type": "integer",
+            "default": 10
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cursos retornados com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Cursos retornados com sucesso."
+                },
+                "courses": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CourseGet"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/course/{id}": {
+      "get": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "Obtém um curso pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do curso."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Curso retornado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Curso retornado com sucesso."
+                },
+                "course": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CourseGet"
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Curso não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Curso não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "Atualiza um curso pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do curso."
+          },
+          {
+            "name": "CourseData",
+            "in": "body",
+            "description": "Dados do curso.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CoursePost"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Curso atualizado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Curso atualizado com sucesso."
+                },
+                "updatedCourse": {
+                  "$ref": "#/definitions/CourseGet"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação dos dados.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Preencha os dados corretamente."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "description": "Curso não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Curso não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Courses"
+        ],
+        "description": "Deleta um curso pelo ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do curso."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Curso deletado com sucesso."
+          },
+          "404": {
+            "description": "Curso não encontrado.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Curso não encontrado."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Erro interno do servidor."
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -505,12 +1237,12 @@
           "example": "string"
         },
         "premiumAccess": {
-          "type": "string",
-          "example": "boolean"
+          "type": "boolean",
+          "example": false
         },
         "paidAccess": {
-          "type": "string",
-          "example": "boolean"
+          "type": "boolean",
+          "example": false
         }
       }
     },
@@ -614,6 +1346,142 @@
         "url": {
           "type": "string",
           "example": "string"
+        }
+      }
+    },
+    "ModulePost": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "string"
+        },
+        "description": {
+          "type": "string",
+          "example": "string"
+        },
+        "videos": {
+          "type": "array",
+          "example": [
+            "video_id"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "introVideo": {
+          "type": "string",
+          "example": "video_id"
+        }
+      }
+    },
+    "ModuleGet": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "string"
+        },
+        "title": {
+          "type": "string",
+          "example": "string"
+        },
+        "description": {
+          "type": "string",
+          "example": "string"
+        },
+        "videos": {
+          "type": "array",
+          "example": [
+            "video_id"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "introVideo": {
+          "type": "string",
+          "example": "video_id"
+        }
+      }
+    },
+    "CourseGet": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "string"
+        },
+        "title": {
+          "type": "string",
+          "example": "string"
+        },
+        "description": {
+          "type": "string",
+          "example": "string"
+        },
+        "price": {
+          "type": "string",
+          "example": "string"
+        },
+        "modules": {
+          "type": "array",
+          "example": [
+            "module_id"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "lifetime": {
+          "type": "boolean",
+          "example": false
+        },
+        "premium": {
+          "type": "boolean",
+          "example": false
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "string"
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    "CoursePost": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "string"
+        },
+        "description": {
+          "type": "string",
+          "example": "string"
+        },
+        "price": {
+          "type": "string",
+          "example": "string"
+        },
+        "modules": {
+          "type": "array",
+          "example": [
+            "module_id"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "lifetime": {
+          "type": "boolean",
+          "example": false
+        },
+        "premium": {
+          "type": "boolean",
+          "example": false
         }
       }
     }

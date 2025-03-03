@@ -37,10 +37,32 @@ export class VideoRepository {
     await Video.deleteOne({ _id: id });
   }
 
-  async update(id: string, body: Video): Promise<Video> {
-    const updateVideo = await Video.findByIdAndUpdate(id, body);
-    if (!updateVideo) throw new Error('Video não encontrado');
-    const updatedVideo = (await Video.findById(id)) as Video;
-    return updatedVideo;
+  async update(id: string, req: Request): Promise<Video> {
+    const { body } = req;
+    const { description, title } = body as Video;
+    try {
+      if (!req.file) {
+        throw new Error('Nenhum arquivo enviado.');
+      }
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: 'uploads',
+        resource_type: 'video',
+      });
+      fs.unlinkSync(req.file.path);
+
+      const updateData = {
+        description,
+        title,
+        url: result.secure_url,
+      };
+      const updateVideo = await Video.findByIdAndUpdate(id, updateData, {
+        new: true,
+      });
+      if (!updateVideo) throw new Error('Video não encontrado');
+      const updatedVideo = (await Video.findById(id)) as Video;
+      return updatedVideo;
+    } catch (error) {
+      throw new Error(`Erro ao atualizar vídeo: ${error}`);
+    }
   }
 }
