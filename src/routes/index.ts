@@ -4,6 +4,7 @@ import { videoRouter } from './video-routes';
 import { moduleRouter } from './module-routes';
 import { courseRouter } from './course-routes';
 import { authRouter } from './auth-routes';
+import { progressRouter } from './progress-routes';
 
 export const routes = (app: express.Express) => {
   app.use(json());
@@ -12,4 +13,5 @@ export const routes = (app: express.Express) => {
   app.use(moduleRouter);
   app.use(courseRouter);
   app.use(authRouter);
+  app.use(progressRouter);
 };

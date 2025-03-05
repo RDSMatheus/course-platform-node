@@ -14,7 +14,7 @@ const coursoSchema = new Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: String, required: true },
-    modules: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Modulo' }],
+    modules: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Module' }],
     lifetime: { type: Boolean, default: false },
     premium: { type: Boolean, default: false },
   },

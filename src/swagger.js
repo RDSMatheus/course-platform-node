@@ -76,6 +76,32 @@ const doc = {
       lifetime: false,
       premium: false,
     },
+    VideoProgressPost: {
+      courseId: 'string',
+      userId: 'string',
+      videoId: 'string',
+    },
+    VideoProgressResponse: {
+      _id: 'string',
+      course: 'id',
+      user: 'id',
+      completedModule: ['id'],
+      completedVideos: ['id'],
+      lastAccessedAt: 'date',
+    },
+    ModuleProgressPost: {
+      courseId: 'string',
+      userId: 'string',
+      moduleId: 'string',
+    },
+    ProgressGet: {
+      _id: 'string',
+      course: 'id',
+      user: 'id',
+      completedModule: [{ $ref: '#/definitions/ModuleGet' }],
+      completedVideos: [{ $ref: '#/definitions/VideoGet' }],
+      lastAccessedAt: 'date',
+    },
   },
 };
 
@@ -86,6 +112,7 @@ const routes = [
   './lib/routes/auth-routes.js',
   './lib/routes/module-routes.js',
   './lib/routes/course-routes.js',
+  './lib/routes/progress-routes.js',
 ];
 
 swaggerAutogen(outputFile, routes, doc);

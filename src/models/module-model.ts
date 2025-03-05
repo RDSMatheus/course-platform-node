@@ -16,4 +16,4 @@ const moduleSchema = new Schema({
   introVideo: { type: mongoose.Schema.Types.ObjectId, required: true },
 });
 
-export const Module = mongoose.model('Modulo', moduleSchema);
+export const Module = mongoose.model('Module', moduleSchema);

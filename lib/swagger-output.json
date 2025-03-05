@@ -1210,6 +1210,233 @@
                     }
                 }
             }
+        },
+        "/v1/complete-video": {
+            "post": {
+                "tags": [
+                    "Progress"
+                ],
+                "description": "Atualiza os vídeos vistos em determinado curso.",
+                "parameters": [
+                    {
+                        "name": "ProgressData",
+                        "in": "body",
+                        "description": "Dados do vídeo completado.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/VideoProgressPost"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vídeo concluído com sucesso.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Vídeo concluído com sucesso."
+                                },
+                                "progress": {
+                                    "$ref": "#/definitions/VideoProgressResponse"
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/complete-module": {
+            "post": {
+                "tags": [
+                    "Progress"
+                ],
+                "description": "Atualiza os módulos concluídos em determinado curso.",
+                "parameters": [
+                    {
+                        "name": "ProgressData",
+                        "in": "body",
+                        "description": "Dados do módulo completado.",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ModuleProgressPost"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Módulo concluído com sucesso.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Módulo concluído com sucesso."
+                                },
+                                "progress": {
+                                    "$ref": "#/definitions/VideoProgressResponse"
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/progress/{userId}/{courseId}": {
+            "get": {
+                "tags": [
+                    "Progress"
+                ],
+                "description": "Obtém o progresso do usuário em um curso específico.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário."
+                    },
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do curso."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Progresso retornado com sucesso.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Progresso retornado."
+                                },
+                                "progress": {
+                                    "$ref": "#/definitions/ProgressGet"
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Progresso não encontrado.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Progresso não encontrado."
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Erro interno do servidor."
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/course-progress/{userId}/{courseId}": {
+            "get": {
+                "tags": [
+                    "Progress"
+                ],
+                "description": "Obtém o progresso do curso para um usuário específico.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário."
+                    },
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do curso."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Progresso do curso retornado com sucesso.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Progresso retornado."
+                                },
+                                "progress": {
+                                    "type": "string",
+                                    "example": "string"
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Progresso do curso não encontrado.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Progresso do curso não encontrado."
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Erro interno do servidor."
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1482,6 +1709,112 @@
                 "premium": {
                     "type": "boolean",
                     "example": false
+                }
+            }
+        },
+        "VideoProgressPost": {
+            "type": "object",
+            "properties": {
+                "courseId": {
+                    "type": "string",
+                    "example": "string"
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "string"
+                },
+                "videoId": {
+                    "type": "string",
+                    "example": "string"
+                }
+            }
+        },
+        "VideoProgressResponse": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "example": "string"
+                },
+                "course": {
+                    "type": "string",
+                    "example": "id"
+                },
+                "user": {
+                    "type": "string",
+                    "example": "id"
+                },
+                "completedModule": {
+                    "type": "array",
+                    "example": [
+                        "id"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "completedVideos": {
+                    "type": "array",
+                    "example": [
+                        "id"
+                    ],
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "lastAccessedAt": {
+                    "type": "string",
+                    "example": "date"
+                }
+            }
+        },
+        "ModuleProgressPost": {
+            "type": "object",
+            "properties": {
+                "courseId": {
+                    "type": "string",
+                    "example": "string"
+                },
+                "userId": {
+                    "type": "string",
+                    "example": "string"
+                },
+                "moduleId": {
+                    "type": "string",
+                    "example": "string"
+                }
+            }
+        },
+        "ProgressGet": {
+            "type": "object",
+            "properties": {
+                "_id": {
+                    "type": "string",
+                    "example": "string"
+                },
+                "course": {
+                    "type": "string",
+                    "example": "id"
+                },
+                "user": {
+                    "type": "string",
+                    "example": "id"
+                },
+                "completedModule": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ModuleGet"
+                    }
+                },
+                "completedVideos": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/VideoGet"
+                    }
+                },
+                "lastAccessedAt": {
+                    "type": "string",
+                    "example": "date"
                 }
             }
         }
