@@ -70,4 +70,8 @@ export class ProgressRepository {
     }
     return percentage.toFixed(2) + '%';
   }
+
+  async deleteProgress(userId: string, courseId: string) {
+    await Progress.findOneAndDelete({ user: userId, course: courseId });
+  }
 }

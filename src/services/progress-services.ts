@@ -34,10 +34,27 @@ export class ProgressServices {
     return await this._progressRepository.getProgress(courseId, userId);
   }
 
-  async getCourseProgress(courseId: string, userId: string) {
+  async getCourseProgress(courseId: string, userId: string): Promise<string> {
     if (!courseId || !userId) {
       throw new Error('Insira todos os valores.');
     }
     return await this._progressRepository.getCourseProgress(courseId, userId);
+  }
+
+  async deleteProgress(userId: string, courseId: string): Promise<void> {
+    if (!courseId || !userId) {
+      throw new Error('Insira todos os valores.');
+    }
+
+    const progress = await this._progressRepository.getProgress(
+      courseId,
+      userId,
+    );
+
+    if (!progress) {
+      throw new Error('Progresso não encontrado.');
+    }
+
+    await this._progressRepository.deleteProgress(userId, courseId);
   }
 }

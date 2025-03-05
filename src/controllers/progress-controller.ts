@@ -67,4 +67,17 @@ export class ProgressController {
       }
     }
   }
+  static async deleteProgress(req: Request, res: Response) {
+    try {
+      const { userId, courseId } = req.params;
+      await new ProgressServices().deleteProgress(userId, courseId);
+      res.status(204).send();
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(400).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Unknown error.' });
+      }
+    }
+  }
 }

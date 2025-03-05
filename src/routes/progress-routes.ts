@@ -122,3 +122,35 @@ progressRouter.get(
   */
   ProgressController.getCourseProgress,
 );
+
+progressRouter.delete(
+  '/v1/delete-progress/:userId/:courseId',
+  /* 
+    #swagger.tags = ["Progress"]
+    #swagger.description = 'Deleta o progresso do usuário em um curso específico.'
+    #swagger.parameters['userId'] = {
+      in: 'path',
+      description: 'ID do usuário.',
+      required: true,
+      type: 'string'
+    }
+    #swagger.parameters['courseId'] = {
+      in: 'path',
+      description: 'ID do curso.',
+      required: true,
+      type: 'string'
+    }
+    #swagger.responses[204] = {
+      description: 'Progresso deletado com sucesso.'
+    }
+    #swagger.responses[404] = {
+      description: 'Progresso não encontrado.',
+      schema: { message: "Progresso não encontrado." }
+    }
+    #swagger.responses[500] = {
+      description: 'Erro interno do servidor.',
+      schema: { message: "Erro interno do servidor." }
+    }
+  */
+  ProgressController.deleteProgress,
+);
