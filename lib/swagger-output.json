@@ -5,7 +5,7 @@
         "description": "Documentação da api de uma plataforma de cursos.",
         "version": "1.0.0"
     },
-    "host": "localhost:3000",
+    "host": "https://course-platform-node.onrender.com",
     "basePath": "/",
     "schemes": [
         "http"
@@ -1413,6 +1413,65 @@
                                 "message": {
                                     "type": "string",
                                     "example": "Progresso do curso não encontrado."
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Erro interno do servidor."
+                                }
+                            },
+                            "xml": {
+                                "name": "main"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/delete-progress/{userId}/{courseId}": {
+            "delete": {
+                "tags": [
+                    "Progress"
+                ],
+                "description": "Deleta o progresso do usuário em um curso específico.",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do usuário."
+                    },
+                    {
+                        "name": "courseId",
+                        "in": "path",
+                        "required": true,
+                        "type": "string",
+                        "description": "ID do curso."
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Progresso deletado com sucesso."
+                    },
+                    "404": {
+                        "description": "Progresso não encontrado.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "example": "Progresso não encontrado."
                                 }
                             },
                             "xml": {
