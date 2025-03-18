@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT;
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-app.use(cors({ origin: '*' }));
+app.use(cors());
 
 main();
 routes(app);

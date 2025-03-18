@@ -4,7 +4,6 @@ export class ModuleRepository {
   async post(body: Module) {
     try {
       const module = new Module(body);
-      console.log(module);
       await module.save();
     } catch (error) {
       throw new Error('Erro ao salvar o módulo no servidor.');

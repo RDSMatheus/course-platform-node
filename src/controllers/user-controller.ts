@@ -13,7 +13,7 @@ export class UserController {
 
   static async getByEmail(req: Request, res: Response) {
     try {
-      const { email } = req.body;
+      const { email } = req.params;
       const user = await new UserServices().getByEmail(email);
       res.status(200).json({ message: 'Usuário retornado.', user });
     } catch (error) {}
