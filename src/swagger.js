@@ -5,7 +5,7 @@ const doc = {
     title: 'CoursePlatformApi',
     description: 'Documentação da api de uma plataforma de cursos.',
   },
-  host: 'https://course-platform-node.onrender.com',
+  host: 'localhost:3000',
   definitions: {
     UserPost: {
       name: 'string',
