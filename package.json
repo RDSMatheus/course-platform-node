@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsc-watch --onSuccess \"node --env-file=.env ./lib/app.js\"",
-    "swagger": "node ./src/swagger.js"
+    "swagger": "node --env-file=.env ./src/swagger.js"
   },
   "author": "",
   "license": "ISC",

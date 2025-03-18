@@ -5,7 +5,7 @@ const doc = {
     title: 'CoursePlatformApi',
     description: 'Documentação da api de uma plataforma de cursos.',
   },
-  host: 'localhost:3000',
+  host: process.env.BASE_URL,
   definitions: {
     UserPost: {
       name: 'string',
