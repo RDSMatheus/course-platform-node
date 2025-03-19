@@ -62,7 +62,7 @@ http://localhost:3000/docs
 
 ### Autenticação
 
-- POST /v1/auth/login - Login de usuário
+- POST /v1/auth/login - Retorna um token
 
 ### Usuários
 
