@@ -63,12 +63,12 @@ http://localhost:3000/docs
 ### Autenticação
 
 - POST /v1/auth/login - Login de usuário
-- POST /v1/auth/register - Registro de novo usuário
 
 ### Usuários
 
+- POST /v1/users - Cria um usuário
 - GET /v1/users - Lista todos os usuários
-- GET /v1/users/:id - Obtém um usuário específico
+- GET /v1/users/:email - Obtém um usuário específico
 - PUT /v1/users/:id - Atualiza um usuário
 - DELETE /v1/users/:id - Remove um usuário
 
