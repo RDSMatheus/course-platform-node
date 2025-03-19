@@ -114,10 +114,6 @@ http://localhost:3000/docs
 - Swagger
 - TypeScript
 
-## 📄 Licença
-
-Este projeto está sob a licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para detalhes.
-
 ## ✒️ Autor
 
 - **Matheus Ramos** - _Desenvolvimento_ - [RDSMatheus](https://github.com/RDSMatheus)
