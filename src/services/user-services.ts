@@ -44,7 +44,9 @@ export class UserServices {
   }
 
   async getByEmail(email: string): Promise<User> {
-    return await this.userRepository.getByEmail(email);
+    const user = await this.userRepository.getByEmail(email);
+    if (!user) throw new Error('Usuário não encontrado.');
+    return user;
   }
 
   async get(page: number, pageSize: number): Promise<User[]> {

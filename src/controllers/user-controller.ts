@@ -16,7 +16,13 @@ export class UserController {
       const { email } = req.params;
       const user = await new UserServices().getByEmail(email);
       res.status(200).json({ message: 'Usuário retornado.', user });
-    } catch (error) {}
+    } catch (error) {
+      if (error instanceof Error) {
+        res.status(400).json({ message: error.message });
+      } else {
+        res.status(500).json({ message: 'Unknown error' });
+      }
+    }
   }
 
   static async get(req: Request, res: Response) {
