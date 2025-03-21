@@ -114,7 +114,6 @@ http://localhost:3000/docs
 - Swagger
 - TypeScript
 
-
 ## ✒️ Autor
 
 - **Matheus Ramos** - _Desenvolvimento_ - [RDSMatheus](https://github.com/RDSMatheus)
