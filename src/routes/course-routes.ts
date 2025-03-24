@@ -79,7 +79,7 @@ courseRouter.get(
       description: 'Curso retornado com sucesso.',
       schema: { 
         message: "Curso retornado com sucesso.",
-        course: [{$ref: "#/definitions/CourseGet"}] 
+        course: {$ref: "#/definitions/CourseGet"} 
       }
     }
     #swagger.responses[404] = {
