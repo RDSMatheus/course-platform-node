@@ -31,14 +31,28 @@ export class ProgressServices {
     if (!courseId || !userId) {
       throw new Error('Insira todos os valores.');
     }
-    return await this._progressRepository.getProgress(courseId, userId);
+    const progress = await this._progressRepository.getProgress(
+      courseId,
+      userId,
+    );
+    if (!progress) {
+      throw new Error('Progresso não encontrado.');
+    }
+    return progress;
   }
 
   async getCourseProgress(courseId: string, userId: string): Promise<string> {
     if (!courseId || !userId) {
       throw new Error('Insira todos os valores.');
     }
-    return await this._progressRepository.getCourseProgress(courseId, userId);
+    const progress = await this._progressRepository.getCourseProgress(
+      courseId,
+      userId,
+    );
+    if (!progress) {
+      throw new Error('Progresso não encontrado.');
+    }
+    return progress;
   }
 
   async deleteProgress(userId: string, courseId: string): Promise<void> {
